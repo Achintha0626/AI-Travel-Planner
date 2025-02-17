@@ -46,7 +46,7 @@ export default function SignIn() {
       );
 
       console.log("Signed in as:", userCredential.user.email);
-      router.replace("/home"); //still not implement
+      router.replace("/mytrip"); 
     } catch (error) {
       console.error("Sign-In Error:", error.code, error.message);
 
