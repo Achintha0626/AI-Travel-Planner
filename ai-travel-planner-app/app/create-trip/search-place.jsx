@@ -51,6 +51,8 @@ export default function SearchPlace() {
                 url: details?.url,
               },
             }));
+
+            router.push("/create-trip/select-traveler");
           }}
           query={{
             key: process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY,
