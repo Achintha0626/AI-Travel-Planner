@@ -6,7 +6,7 @@ import {
   FlatList,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigation, useRouter } from "expo-router";
+import { Link, useNavigation, useRouter } from "expo-router";
 import { Colors } from "../../constants/Colors";
 import { SelectTravelsList } from "../../constants/Options";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -41,6 +41,7 @@ export default function SelectTraveler() {
       <TouchableOpacity onPress={() => router.back()}>
         <Ionicons name="arrow-back-outline" size={24} color="black" />
       </TouchableOpacity>
+
       <Text style={styles.title}>Who's Traveling</Text>
       <View style={{ marginTop: 20 }}>
         <Text style={styles.sub_title}>Choose your travelers</Text>
@@ -59,7 +60,10 @@ export default function SelectTraveler() {
           )}
         />
       </View>
-      <TouchableOpacity style={styles.opacity}>
+      <TouchableOpacity
+        style={styles.opacity}
+        onPress={() => router.push("/create-trip/select-dates")}
+      >
         <Text style={styles.button}>Continue</Text>
       </TouchableOpacity>
     </View>
