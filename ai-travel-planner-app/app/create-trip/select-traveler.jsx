@@ -5,16 +5,20 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "../../constants/Colors";
 import { SelectTravelsList } from "../../constants/Options";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import OptionCard from "../../components/CreateTrip/OptionCard";
+import { CreateTripContext } from "../../context/CreateTripContext";
 
 export default function SelectTraveler() {
   const navigation = useNavigation();
   const router = useRouter();
+
+  const [selectedTraveler, setSelectedTraveler] = useState();
+  const { tripData, setTripData } = useContext(CreateTripContext);
 
   useEffect(() => {
     navigation.setOptions({
@@ -22,7 +26,15 @@ export default function SelectTraveler() {
       headerTransparent: true,
       headerTitle: "",
     });
-  });
+  }, []);
+
+  useEffect(() => {
+    setTripData({ ...tripData, traveler: selectedTraveler });
+  }, [selectedTraveler]);
+
+  useEffect(() => {
+    console.log(tripData);
+  }, [tripData]);
 
   return (
     <View style={styles.container}>
@@ -36,16 +48,20 @@ export default function SelectTraveler() {
         <FlatList
           data={SelectTravelsList}
           renderItem={({ item, index }) => (
-            <View
+            <TouchableOpacity
+              onPress={() => setSelectedTraveler(item)}
               style={{
                 marginVertical: 10,
               }}
             >
-              <OptionCard option={item} />
-            </View>
+              <OptionCard option={item} selectedTraveler={selectedTraveler} />
+            </TouchableOpacity>
           )}
         />
       </View>
+      <TouchableOpacity style={styles.opacity}>
+        <Text style={styles.button}>Continue</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -65,5 +81,17 @@ const styles = StyleSheet.create({
   sub_title: {
     fontFamily: "outfit-bold",
     fontSize: 23,
+  },
+  opacity: {
+    padding: 15,
+    backgroundColor: Colors.PRIMARY,
+    borderRadius: 15,
+    marginTop: 25,
+  },
+  button: {
+    textAlign: "center",
+    color: Colors.WHITE,
+    fontFamily: "outfit-medium",
+    fontSize: 20,
   },
 });

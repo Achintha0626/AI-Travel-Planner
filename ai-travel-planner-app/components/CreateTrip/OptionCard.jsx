@@ -2,9 +2,21 @@ import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { Colors } from "../../constants/Colors";
 
-export default function OptionCard({ option }) {
+export default function OptionCard({ option, selectedTraveler }) {
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        {
+          padding: 25,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          backgroundColor: Colors.LIGHT_GRAY,
+          borderRadius: 15,
+        },
+        selectedTraveler?.id == option?.id && { borderWidth: 3 },
+      ]}
+    >
       <View>
         <Text style={styles.title}>{option?.title}</Text>
         <Text style={styles.desc}>{option?.desc}</Text>
@@ -15,14 +27,6 @@ export default function OptionCard({ option }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 25,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: Colors.LIGHT_GRAY,
-    borderRadius: 15,
-  },
   title: {
     fontSize: 20,
     fontFamily: "outfit-bold",
