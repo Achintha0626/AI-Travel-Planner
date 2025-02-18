@@ -1,68 +1,74 @@
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
+  StyleSheet,
   FlatList,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigation, useRouter } from "expo-router";
-import { Colors } from "../../constants/Colors";
-import { SelectTravelsList } from "../../constants/Options";
+import { useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import OptionCard from "../../components/CreateTrip/OptionCard";
+import { SelectBudgetOptions } from "../../constants/Options";
+import OptionCard from "./../../components/CreateTrip/OptionCard";
+import { Colors } from "../../constants/Colors";
 import { CreateTripContext } from "../../context/CreateTripContext";
+import { Alert, Platform } from "react-native";
 
-export default function SelectTraveler() {
-  const navigation = useNavigation();
+export default function SelectBudget() {
   const router = useRouter();
 
-  const [selectedTraveler, setSelectedTraveler] = useState();
+  const [selectedOption, setSelectedOption] = useState();
   const { tripData, setTripData } = useContext(CreateTripContext);
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-      headerTransparent: true,
-      headerTitle: "",
-    });
-  }, []);
+  const onClickContinue = () => {
+    if (!selectedOption) {
+      const message = "Please Select Your Budget";
+      if (Platform.OS === "android") {
+        ToastAndroid.show(message, ToastAndroid.LONG);
+      } else {
+        Alert.alert("Alert", message);
+      }
+
+      return;
+    }
+
+    router.push("");
+  };
 
   useEffect(() => {
-    setTripData({ ...tripData, traveler: selectedTraveler });
-  }, [selectedTraveler]);
-
-  useEffect(() => {
-    console.log(tripData);
-  }, [tripData]);
+    selectedOption &&
+      setTripData({
+        ...tripData,
+        budget: selectedOption?.title,
+      });
+  }, [selectedOption]);
 
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => router.back()}>
         <Ionicons name="arrow-back-outline" size={24} color="black" />
       </TouchableOpacity>
-
-      <Text style={styles.title}>Who's Traveling</Text>
+      <Text style={styles.title}>Budget</Text>
       <View style={{ marginTop: 20 }}>
-        <Text style={styles.sub_title}>Choose your travelers</Text>
+        <Text style={styles.sub_title}>
+          Choose spending habits for your trip
+        </Text>
 
         <FlatList
-          data={SelectTravelsList}
+          data={SelectBudgetOptions}
           renderItem={({ item, index }) => (
             <TouchableOpacity
-              onPress={() => setSelectedTraveler(item)}
-              style={{
-                marginVertical: 10,
-              }}
+              style={styles.flatList}
+              onPress={() => setSelectedOption(item)}
             >
-              <OptionCard option={item} selectedOption={selectedTraveler} />
+              <OptionCard option={item} selectedOption={selectedOption} />
             </TouchableOpacity>
           )}
-        />
+        ></FlatList>
       </View>
       <TouchableOpacity
         style={styles.opacity}
-        onPress={() => router.push("/create-trip/select-dates")}
+        onPress={() => onClickContinue()}
       >
         <Text style={styles.button}>Continue</Text>
       </TouchableOpacity>
@@ -72,19 +78,22 @@ export default function SelectTraveler() {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 65,
     padding: 25,
-    paddingTop: 55,
     backgroundColor: Colors.WHITE,
     height: "100%",
   },
   title: {
-    fontSize: 35,
     fontFamily: "outfit-bold",
+    fontSize: 35,
     marginTop: 20,
   },
   sub_title: {
     fontFamily: "outfit-bold",
-    fontSize: 23,
+    fontSize: 20,
+  },
+  flatList: {
+    marginVertical: 10,
   },
   opacity: {
     padding: 15,

@@ -54,6 +54,8 @@ export default function SelectDates() {
       endDate: endDate,
       totalNoOfDays: totalNoOfDays + 1,
     });
+
+    router.push("/create-trip/select-budget");
   };
 
   return (
@@ -74,7 +76,7 @@ export default function SelectDates() {
           selectedDayTextStyle={{
             color: Colors.WHITE,
           }}
-        />{" "}
+        />
         <View>
           <TouchableOpacity
             style={styles.opacity}
