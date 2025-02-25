@@ -3,11 +3,8 @@ import React from "react";
 import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
 
-
 export default function Login() {
-
-  const router=useRouter();
-
+  const router = useRouter();
 
   return (
     <View>
@@ -24,34 +21,39 @@ export default function Login() {
             fontSize: 28,
             fontFamily: "outfit-bold",
             textAlign: "center",
-            marginTop:10
+            marginTop: 10,
           }}
         >
           AI Travel Planner
         </Text>
 
-        <Text style={{
-          fontFamily:'outfit',
-          fontSize:17,
-          textAlign:'center',
-          color:Colors.GRAY,
-          marginTop:30
-        }}>
-          Discover your next adventure effortlessly.Personalized itineraries at your fingertips.Travel smarter with AI-driven insights
+        <Text
+          style={{
+            fontFamily: "outfit",
+            fontSize: 17,
+            textAlign: "center",
+            color: Colors.GRAY,
+            marginTop: 30,
+          }}
+        >
+          Discover your next adventure effortlessly.Personalized itineraries at
+          your fingertips. Travel smarter with AI-driven insights
         </Text>
 
-        <TouchableOpacity style={styles.button}
-        onPress={()=>router.push('auth/sign-in')}
-        
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push("auth/sign-in")}
         >
-          
-          <Text style={{
-            color:Colors.WHITE,
-            textAlign:'center',
-            fontSize:17,
-          }}>Get Started</Text>
+          <Text
+            style={{
+              color: Colors.WHITE,
+              textAlign: "center",
+              fontSize: 17,
+            }}
+          >
+            Get Started
+          </Text>
         </TouchableOpacity>
-
       </View>
     </View>
   );
@@ -66,10 +68,10 @@ const styles = StyleSheet.create({
     padding: 15,
     height: "100%",
   },
-  button:{
-    padding:25,
-    backgroundColor:Colors.PRIMARY,
-    borderRadius:99,
-    marginTop:'20%'
-  }
+  button: {
+    padding: 25,
+    backgroundColor: Colors.PRIMARY,
+    borderRadius: 99,
+    marginTop: "20%",
+  },
 });

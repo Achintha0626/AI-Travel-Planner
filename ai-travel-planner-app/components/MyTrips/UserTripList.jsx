@@ -3,9 +3,12 @@ import React from "react";
 import moment from "moment";
 import { Colors } from "../../constants/Colors";
 import UserTripCard from "./UserTripCard";
-
+import { useRouter } from "expo-router";
+import Ionicons from "@expo/vector-icons/Ionicons";
 export default function UserTripList({ userTrips }) {
   const LatestTrip = JSON.parse(userTrips[0].tripData);
+
+  const router = useRouter();
 
   return (
     userTrips && (
@@ -42,13 +45,31 @@ export default function UserTripList({ userTrips }) {
                 {LatestTrip.traveler.title}{" "}
               </Text>
             </View>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                router.push({
+                  pathname: "/trip-details",
+                  params: { trip: JSON.stringify(userTrips[0]) }, // Convert to string
+                })
+              }
+            >
               <Text style={styles.button_text}>See your plan</Text>
             </TouchableOpacity>
           </View>
 
           {userTrips.map((trip, index) => (
-            <UserTripCard trip={trip} key={index} />
+            <TouchableOpacity
+              key={index}
+              onPress={() =>
+                router.push({
+                  pathname: "/trip-details",
+                  params: { trip: JSON.stringify(trip) },
+                })
+              }
+            >
+              <UserTripCard trip={trip} />
+            </TouchableOpacity>
           ))}
         </View>
       </View>

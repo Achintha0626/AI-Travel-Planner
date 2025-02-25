@@ -9,7 +9,9 @@ export default function StartNewTripCard() {
 
   return (
     <View style={styles.container}>
-      <Ionicons name="location-sharp" size={30} color="black" />
+      <TouchableOpacity>
+        <Ionicons name="location-sharp" size={30} color="black" />
+      </TouchableOpacity>
       <Text style={styles.title}>No trips planned yet</Text>
       <Text style={styles.subTitle}>
         Looks like its time to plan a new experience! Get started below
